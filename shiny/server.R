@@ -123,7 +123,7 @@ function(input, output, session) {
       output$results <- renderUI({
         str1 <- paste0("Locations within 1 Mile: ", k)
         str2 <- paste0("Total on Land: ", n)
-        str3 <- paste0("Estimated Proportion: ", prop.est)
+        str3 <- paste0("Estimated Proportion: ", round(prop.est, 4))
         str4 <- paste0("Confidence Interval: ", cont.int)
         
         results.text <- paste(str1, str2, str3, str4, sep = '<br/>')
@@ -237,7 +237,7 @@ function(input, output, session) {
       output$class.results <- renderUI({
         str1 <- paste0("Locations within 1 Mile: ", class_k)
         str2 <- paste0("Total on Land: ", class_n)
-        str3 <- paste0("Estimated Proportion: ", class.prop.est)
+        str3 <- paste0("Estimated Proportion: ", round(class.prop.est, 4))
         str4 <- paste0("Confidence Interval: ", class.cont.int)
         
         results.text <- paste(str1, str2, str3, str4, sep = '<br/>')

@@ -104,7 +104,7 @@ function(input, output, session) {
         binom <- binom.test(k, n)
         
         # proportion
-        prop.est <- k/n %>% round(3)
+        prop.est <- round(k/n, 3)
 
         # confidence interval
         cont.int <- paste(round(binom$conf.int[1], 3), round(binom$conf.int[2], 3), sep =", ")
@@ -123,7 +123,7 @@ function(input, output, session) {
       output$results <- renderUI({
         str1 <- paste0("Locations within 1 Mile: ", k)
         str2 <- paste0("Total on Land: ", n)
-        str3 <- paste0("Estimated Proportion: ", round(prop.est, 4))
+        str3 <- paste0("Estimated Proportion: ", prop.est)
         str4 <- paste0("Confidence Interval: ", cont.int)
         
         results.text <- paste(str1, str2, str3, str4, sep = '<br/>')
@@ -220,7 +220,7 @@ function(input, output, session) {
         class_binom <- binom.test(class_k, class_n)
 
         # proportion
-        class.prop.est <- class_k/class_n %>% round(3)
+        class.prop.est <- round(class_k/class_n, 3)
 
         # confidence interval
         class.cont.int <- paste(round(class_binom$conf.int[1], 3),
@@ -237,7 +237,7 @@ function(input, output, session) {
       output$class.results <- renderUI({
         str1 <- paste0("Locations within 1 Mile: ", class_k)
         str2 <- paste0("Total on Land: ", class_n)
-        str3 <- paste0("Estimated Proportion: ", round(class.prop.est, 4))
+        str3 <- paste0("Estimated Proportion: ", class.prop.est)
         str4 <- paste0("Confidence Interval: ", class.cont.int)
         
         results.text <- paste(str1, str2, str3, str4, sep = '<br/>')

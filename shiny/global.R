@@ -45,6 +45,13 @@ generateGroupCIs <- function(results_list) {
   valall = process(results)
   ci.df[i, ] <- valall
 
+  # toss in an index 1, ..., num estimates, num estimates + 1
+  # so when creating the chart, each CI is separated by 1 step
+  ci.df$index <- 1:nrow(ci.df)
+  
+  # toss in a label for student group versus class CI
+  ci.df$label <- c(rep("Group", nrow(ci.df)-1), "Class")
+  
   return(ci.df)
 }
 

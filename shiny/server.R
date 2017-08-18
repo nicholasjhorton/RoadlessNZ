@@ -258,25 +258,28 @@ function(input, output, session) {
       }
 
       if (nrow(ci.df) > 0) {
-        # generate plot
-        plot.new()
-        
         # draw plot with correct number of spaces (num student groups + spot for class-wide)
-        plot(c(1, nrow(ci.df)),
-             c(0, 1), xlab="Group", xaxt="n",
-             ylab="P(Within 1 Mile)", pch=" ") 
+        p <- ggplot() + 
+          xlim(1, nrow(ci.df)) + 
+          ylim(0, 1) + 
+          labs(x = "Group", 
+               y = "P(Within 1 Mile)") + 
+          theme(axis.title.x=element_blank(),
+                axis.text.x=element_blank(),
+                axis.ticks.x=element_blank())
         
-        # add point estimate, CI for each group
-        col='blue'
-        for (pt in 1:nrow(ci.df)) {
-          # last row in dataframe is class-wide. color differently.
-          if (pt == nrow(ci.df)) {
-            col='red'
-          }
-          points(pt, ci.df[pt, 'est'], pch=8)
-          lines(c(pt, pt), ci.df[pt, c('ci1', 'ci2')], col=col)
-        }
+        # add CIs, colored by group v. classwide label
+        p <- p + 
+          geom_segment(data=ci.df, aes(x = index, y = ci1, xend = index, yend = ci2, 
+                                       colour = label)) + 
+          guides(colour=guide_legend(title="Sample")) # "Sample" more clear than "label" for legend
         
+        # add a point to each CI indicating point estimates
+        p <- p + 
+          geom_point(data=ci.df, aes(x = index, y=est))
+       
+        # print our beautiful plot
+        p 
       }
 
     })
